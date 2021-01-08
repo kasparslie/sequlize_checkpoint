@@ -8,8 +8,6 @@ picture: DataTypes.STRING,
 artist: DataTypes.STRING,
 
 
-
-
 }, {});
     album.associate = function(models) {
         album.hasMany(models.track, {timestamps : false})
