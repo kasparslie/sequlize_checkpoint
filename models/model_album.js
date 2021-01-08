@@ -3,15 +3,16 @@ const models = require("../models");
 module.exports = (sequelize, DataTypes) => {
 const album = sequelize.define('album', {
 title: DataTypes.STRING,
-youtube_url: DataTypes.STRING,
-
+genre: DataTypes.STRING,
+picture: DataTypes.STRING,
+artist: DataTypes.STRING,
 
 
 
 
 }, {});
     album.associate = function(models) {
-        album.hasOne(models.album, {timestamps : false})
+        album.hasMany(models.track, {timestamps : false})
 }
 return album; 
 }

@@ -11,7 +11,7 @@ youtube_url: DataTypes.STRING,
 
 }, {});
     track.associate = function(models) {
-        track.hasOne(models.album, {timestamps : false})
+        track.belongsTo(models.album, {timestamps : false})
 }
 return track; 
 }
