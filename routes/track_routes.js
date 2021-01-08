@@ -2,6 +2,11 @@ const Sequelize = require('sequelize')
 const express = require('express')
 const trackRouter = express.Router()
 const models = require('../models')
+const Op = Sequelize.Op;
+const operatorsAliases = {
+  $like: Op.like,
+  $not: Op.not
+}
 
 
 
@@ -53,6 +58,22 @@ trackRouter.delete('/delete/:id', (req, res) => {
     })
     .then(res.end("Track has been modified accordingly"))
   })
+
+  trackRouter.get('/search?', (req, res) =>
+  models
+  .track
+  .findAll({where:
+    {
+      title: {
+        [Op.like]: '%' + req.query.title + '%'
+      },
+    },
+    include: {
+        model: models.album, 
+    }
+})
+.then(album => res.json(album))
+);
 
 
 
