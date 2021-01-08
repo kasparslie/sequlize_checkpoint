@@ -2,6 +2,11 @@ const Sequelize = require('sequelize')
 const express = require('express')
 const albumRouter = express.Router()
 const models = require('../models')
+const Op = Sequelize.Op;
+const operatorsAliases = {
+  $like: Op.like,
+  $not: Op.not
+}
 
 
 
@@ -55,6 +60,33 @@ albumRouter.delete('/delete/:id', (req, res) => {
     .then(res.end("Album has been modified accordingly"))
   })
 
+  albumRouter.get('/title/search?', (req, res) =>
+  models
+  .album
+  .findAll({
+      where: {
+          title: {
+              [Op.like]: '%' + req.query.title + '%'
+            },
+      }
+    })
+  .then(album => res.json(album))
+  );
+
+  albumRouter.get('/genre/search?', (req, res) =>
+  models
+  .album
+  .findAll({
+      where: {
+        genre: {
+              [Op.like]: '%' + req.query.genre + '%'
+            },
+      }
+    })
+  .then(album => res.json(album))
+  );
+
+  
 
 
 
